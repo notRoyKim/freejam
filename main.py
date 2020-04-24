@@ -1,6 +1,8 @@
 import pyautogui as pag
+import keyboard as kb
 import mss, cv2
 import numpy as np
+import time
 
 #mabinogi freestyle jam macro
 
@@ -33,20 +35,32 @@ import numpy as np
 
 #note will be located at 550/976, so 56% apart from the top. 
 
+def freestyle_jam(com, pos) : 
+    count = 0
+    
+    while count < com :
+        with mss.mss() as sct :
+            img = np.array(sct.grab(pos))[:,:,:3]
+            compute_note_type(img)
+      
+        pos['left'] = pos['left'] + 46
+        count = count + 1
+
+
 
 def compute_note_type(img):
     mean = np.mean(img, axis = (0,1))
     
-    if mean[0] < 75 and mean[1] < 75 :
-        print("a")
-        #pag.keyDown('d')
-        #pag.keyUp('d')
+    if mean[0] < 80 and mean[1] < 80 :
+        print("a",mean[0],mean [1])
+        #pag.keyDown('a')
+        #pag.keyUp('a')
     elif mean[0] < 90 and mean[1] < 90 :
-        print("d")
+        print("d",mean[0],mean [1])
     elif mean[0] < 110 and mean[1] < 110 :
-        print("s")
+        print("s",mean[0],mean [1])
     else :
-        print("w")
+        print("w",mean[0],mean [1])
 
 #icon position
 freejam_icon_pos = {'left':978, 'top':86, 'width':30, 'height':28}
@@ -56,11 +70,11 @@ freejam_button = [978,86]
 
 #combo position
 #com_1_icon_pos = {'left':861, 'top':593, 'width':16, 'height':16}
-com_1_icon_pos = {'left':815, 'top':593, 'width':16, 'height':18}
-com_2_icon_pos = {'left':837, 'top':593, 'width':16, 'height':18}
-com_3_icon_pos = {'left':815, 'top':593, 'width':16, 'height':18}
-com_4_icon_pos = {'left':791, 'top':593, 'width':16, 'height':18}
-com_5_icon_pos = {'left':746, 'top':593, 'width':16, 'height':18}
+com_1_icon_pos = {'left':815, 'top':593, 'width':18, 'height':18}
+com_2_icon_pos = {'left':837, 'top':593, 'width':18, 'height':18}
+com_3_icon_pos = {'left':815, 'top':593, 'width':18, 'height':18}
+com_4_icon_pos = {'left':791, 'top':593, 'width':18, 'height':18}
+com_5_icon_pos = {'left':746, 'top':593, 'width':18, 'height':18}
 
 #combo note count
 com1 = 5
@@ -69,30 +83,21 @@ com3 = 7
 com4 = 8
 com5 = 10
 
-"""
-with mss.mss() as sct:
-    freejam_img = np.array(sct.grab(freejam_icon_pos))[:,:,:3]
-    
-    com_1_img = np.array(sct.grab(com_1_icon_pos))[:,:,:3]
-    com_2_img = np.array(sct.grab(com_2_icon_pos))[:,:,:3]
-    com_3_img = np.array(sct.grab(com_3_icon_pos))[:,:,:3]
-    com_4_img = np.array(sct.grab(com_4_icon_pos))[:,:,:3]
-    com_5_img = np.array(sct.grab(com_5_icon_pos))[:,:,:3]
-    
-#image loading test
-#   cv2.imshow('freejam_img',freejam_img)
-    compute_note_type(com_5_img)
-    cv2.imshow('com_5_img',com_5_img)
-    cv2.waitKey(0)
-    
-"""
 
-count = 0
-while count < com5 :
-    with mss.mss() as sct :
-        com_1_img = np.array(sct.grab(com_1_icon_pos))[:,:,:3]
-        compute_note_type(com_1_img)
-        
-    com_1_icon_pos['left'] = com_1_icon_pos['left'] + 46
-    
-    count = count + 1
+pag.moveTo(x = 200,y = 200, duration = 0.0)
+pag.mouseDown()
+pag.mouseUp()
+
+kb.press_and_release('1')
+print("jam is now on!")
+time.sleep(1)
+
+kb.press_and_release('f1')
+print("go!")
+time.sleep(15)
+
+freestyle_jam(com1,com_1_icon_pos)
+freestyle_jam(com2,com_2_icon_pos)
+freestyle_jam(com3,com_3_icon_pos)
+freestyle_jam(com4,com_4_icon_pos)
+freestyle_jam(com5,com_5_icon_pos)
