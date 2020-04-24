@@ -45,7 +45,15 @@ def freestyle_jam(com, pos) :
       
         pos['left'] = pos['left'] + 46
         count = count + 1
-
+        time.sleep(0.1)
+        
+        imagename = "img_" + str(com) + "_" + str(count)
+        cv2.imwrite('./imgfolder'+imagename+'.jpg',img)
+        #cv2.waitKey(0)
+        
+    time.sleep(9.2)
+    print("\n==================================\n")
+    
 
 
 def compute_note_type(img):
@@ -53,14 +61,16 @@ def compute_note_type(img):
     
     if mean[0] < 80 and mean[1] < 80 :
         print("a",mean[0],mean [1])
-        #pag.keyDown('a')
-        #pag.keyUp('a')
+        kb.press_and_release('a')
     elif mean[0] < 90 and mean[1] < 90 :
         print("d",mean[0],mean [1])
-    elif mean[0] < 110 and mean[1] < 110 :
+        kb.press_and_release('d')
+    elif mean[0] < 105 and mean[1] < 105 :
         print("s",mean[0],mean [1])
+        kb.press_and_release('s')
     else :
         print("w",mean[0],mean [1])
+        kb.press_and_release('w')
 
 #icon position
 freejam_icon_pos = {'left':978, 'top':86, 'width':30, 'height':28}
@@ -69,11 +79,10 @@ freejam_icon_pos = {'left':978, 'top':86, 'width':30, 'height':28}
 freejam_button = [978,86]
 
 #combo position
-#com_1_icon_pos = {'left':861, 'top':593, 'width':16, 'height':16}
-com_1_icon_pos = {'left':815, 'top':593, 'width':18, 'height':18}
-com_2_icon_pos = {'left':837, 'top':593, 'width':18, 'height':18}
+com_1_icon_pos = {'left':861, 'top':593, 'width':18, 'height':18}
+com_2_icon_pos = {'left':838, 'top':593, 'width':18, 'height':18}
 com_3_icon_pos = {'left':815, 'top':593, 'width':18, 'height':18}
-com_4_icon_pos = {'left':791, 'top':593, 'width':18, 'height':18}
+com_4_icon_pos = {'left':792, 'top':593, 'width':18, 'height':18}
 com_5_icon_pos = {'left':746, 'top':593, 'width':18, 'height':18}
 
 #combo note count
