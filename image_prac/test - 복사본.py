@@ -1,18 +1,40 @@
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageChops
+from PIL import ImageOps
 from PIL import ImageStat
+import cv2
 import sys
 import time
 
 source = Image.open("source.jpg")
 sx,sy = source.size
-target = Image.open("target3.jpg")
+
+#gs = source.convert("L")
+#gs.show()
+
+background = Image.open("./color/inv_back_clr2.png")
+bx,by = background.size
+
+target = Image.open("test2.png")
 tx,ty = target.size
+
+#mask = Image.open("mask.png")
+#mx,my = target.size
+#mask.show()
+
+#mask_inv = ImageOps.invert(mask)
+#mask_inv.show()
+
 tolerance = 30;
 step = 2;
 
+#-----------------------------------
+#img1 = cv2.imread('target3.')
+#-----------------------------------
+
 print("source size : ", source.size)
+print("background size : ", background.size)
 print("Target size : ", target.size)
 
 trial = 0
